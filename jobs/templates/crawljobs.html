@@ -1,0 +1,136 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Welcome</title>
+ 
+ 
+  
+   
+    <link href={% static 'home/jumbotron-narrow.css' %} rel="stylesheet">
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+</head>
+ 
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">APP</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+                <li><a href="{% url 'jobs:home' %}">Keywords</a></li>
+         <li><a href="{% url 'jobs:jobs' %}">Jobs</a></li>
+         <li><a href="{% url 'mails:home' %}">Mails</a></li>
+         <li><a href="{% url 'jobs:slackchaneels' %}">Slack Channels</a></li>
+
+
+        
+       
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+    <li><a href="{% url 'authsApp:logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+ 
+    <div class="container">
+        <div class="row">
+              <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-16">
+                    <h1 class="page-header">Start Job Crawling</h1>
+                </div>
+               
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-16"> 
+                    <div class="panel panel-priary">
+                          <div class="container">  
+                                <form  action="{% url 'jobs:sync_jobs_indeed' %}" method="post">
+                                  {% csrf_token %}
+                                          <div class="form-group">
+                                              <div class="row">
+
+                                                      <div class="col-md-4">
+                                                              <label>Select Keyword:</label>
+                                                      </div>   
+                                                      <div class="col-md-8">
+                                                           <select name="keyword" class="form-control"> 
+                                                              {% for key in keywords %}
+                                                                <option value="{{key.id}}">{{key}}</option>
+                                                              {% endfor %}
+                                                            </select>
+
+                                                      </div>   
+
+                                              </div>
+                                          </div>
+                                           <div class="form-group">
+                                              <div class="row">
+
+                                                      <div class="col-md-4">
+                                                              <label>Select Portal:</label>
+                                                      </div>   
+                                                      <div class="col-md-8">
+                                                           <select name="portal" class="form-control"> 
+                                                              {% for por in portal %}
+                                                                <option value="{{por.id}}">{{por}}</option>
+                                                              {% endfor %}
+                                                            </select>
+
+                                                      </div>   
+
+                                              </div>
+                                          </div>
+                                          <div class="form-group">
+                                              <div class="row">
+
+                                                      <div class="col-md-4">
+                                                              <label>Enter State:</label>
+                                                      </div>   
+                                                      <div class="col-md-8">
+                                                          <select name="state" class="form-control"> 
+                                                              {% for state in allstates %}
+                                                                <option value="{{state.id}}">{{state.statename}}, {{state.statekey}}</option>
+                                                              {% endfor %}
+                                                            </select>
+                                                            
+                                                      </div>   
+
+                                              </div>
+                                          </div>
+                                            <div class="form-group">
+                                              <div class="row">
+
+                                                      <div class="col-md-4">
+                                                             <input type="submit" class="btn btn-info btn-lg" value="Start">
+                                                      </div>   
+                                                      <div class="col-md-8">
+                                                      </div>   
+
+                                              </div>
+                                          </div>
+                                 </form>
+                            </div>
+                    </div>
+                    
+                </div>
+               
+             </div>
+        </div>     
+    </div>
+        
+</body>
+ 
+</html>

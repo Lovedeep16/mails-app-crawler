@@ -1,0 +1,158 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Welcome</title>
+ 
+ 
+   
+    <link href={% static 'home/jumbotron-narrow.css' %} rel="stylesheet">
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+  
+</head>
+ 
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">APP</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+       
+         <li><a href="{% url 'jobs:home' %}">Keywords</a></li>
+         <li><a href="{% url 'jobs:jobs' %}">Jobs</a></li>
+         <li><a href="{% url 'mails:home' %}">Mails</a></li>
+         <li><a href="{% url 'jobs:slackchaneels' %}">Slack Channels</a></li>
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+    <li>
+      <!-- <a href="{% url 'authsApp:logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a> -->
+    </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+ 
+    <div class="container-fluid">
+        <div class="row">
+              <div id="page-wrapper">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 class="page-header">&nbsp;&nbsp;Jobs</h1>
+                </div>
+                <div class="col-md-4">
+                      <!-- <a href="{% url 'jobs:crawl_jobs' %}" class="btn btn-info">Crawl Jobs</a> -->
+                </div>
+
+                   <!--  <form action="{% url 'jobs:jobFilter' %}" method="GET">
+
+                        <div class="row">
+                                <div class="col-md-6">
+                                       <select class="form-control" name="keyword">
+                                          {% for i in keywords %}
+                                          <option value="{{i.id}}">{{i.keyword_name}}</option>
+                                          {% endfor %}
+                                        </select>
+
+                                </div>
+                                <div class="col-md-6">
+                                   <button type="submit" class="btn btn-info">Load Jobs</button>
+                                </div>
+                        </div>
+                    </form> -->
+               
+                <!-- /.col-lg-12 -->
+                  <br/>
+
+
+
+
+
+
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12"> 
+                    <div class="panel panel-primary">
+                          <div class="container-fluid">  
+                              <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Company name</th>
+                                    <th>Location</th>
+                                    <th>Portal</th>
+                                    <th>Keyword</th>
+
+
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in jobs %}
+                                  <tr>
+                                    <td>{{i.id}}</td>
+                                    <td>{{i.job_title}}</td>
+                                    <td>{{i.job_discription}}</td>
+                                     <td>{{i.company_name}}</td>
+                                     <td>{{i.state.statename}}, {{i.state.statekey}}</td>
+                                     <td>{{i.portal_id}}</td>
+                                     <td>{{i.keyword}}</td>
+                                  </tr>
+                                  {% endfor %}
+                                </tbody>
+                              </table>
+{% if jobs.has_other_pages %}
+  <ul class="pagination">
+    {% if jobs.has_previous %}
+      <li><a href="?page={{ jobs.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in jobs.paginator.page_range %}
+      {% if jobs.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if jobs.has_next %}
+      <li><a href="?page={{ jobs.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+                            </div>
+                           </div>
+                        <div class="panel-body">
+                           
+                    
+                        <div class="panel-footer">
+                       
+                        </div>
+                           
+                        </div>
+                    
+                    </div>
+                    
+                </div>
+               
+             </div>
+        </div>     
+    </div>
+        
+</body>
+ 
+</html>

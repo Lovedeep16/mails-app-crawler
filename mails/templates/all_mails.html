@@ -1,0 +1,142 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Welcome</title>
+ 
+ 
+  
+   
+    <link href={% static 'home/jumbotron-narrow.css' %} rel="stylesheet">
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+</head>
+ 
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">APP</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+       
+       
+               <li><a href="{% url 'jobs:home' %}">Keywords</a></li>
+         <li><a href="{% url 'jobs:jobs' %}">Jobs</a></li>
+         <li><a href="{% url 'mails:home' %}">Mails</a></li>
+         <li><a href="{% url 'jobs:slackchaneels' %}">Slack Channels</a></li>
+        
+       
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+    <li>
+      <!-- <a href="{% url 'authsApp:logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a> -->
+    </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+ 
+    <div class="container-fluid">
+        <div class="row">
+              <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="page-header">&nbsp;&nbsp;All Mails</h1>
+                </div>
+                <div class="col-lg-4"> 
+                    <!-- <a href="{% url 'mails:sync_mail' %}" target="_blank" class="btn btn-info"> Sync Mails Now  </a> -->
+                </div>
+              
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12"> 
+                    <div class="panel panel-primary">
+                       
+                          <div class="container-fluid">  
+                              <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                              <th>UID</th>
+                                              <th>KEY</th>
+                                              <th>Mail To</th>
+                                              <th>Mail From</th>
+                                              <th>Mail Title</th>
+                                              <th>Mail Discription</th>
+                                              <th>Date Recieved</th>
+                                           
+                                  </tr>
+                                </thead>
+                                <tbody>
+                               
+                                {% for allmails in mails %}
+                                    <tr>
+
+                                              <td>{{allmails.mail_UID}}</td>
+                                              <td>{{allmails.mail_KEY}}</td>
+                                              <td>{{allmails.mail_to}}</td>
+                                              <td>{{allmails.mail_from}}</td>
+                                              <td>{{allmails.mail_title}}</td>
+                  <td>{{allmails.mail_discription |truncatechars:100 }}...</td>
+                                              <td>{{allmails.date_recieved}}</td>
+                                             
+
+
+                                    </tr>
+                                  {% endfor %}
+                                </tbody>
+                              </table>
+{% if mails.has_other_pages %}
+  <ul class="pagination">
+    {% if mails.has_previous %}
+      <li><a href="?page={{ mails.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in mails.paginator.page_range %}
+      {% if mails.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if mails.has_next %}
+      <li><a href="?page={{ mails.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+                            </div>
+                           </div>
+                        <div class="panel-body">
+                           
+                    
+                        <div class="panel-footer">
+                       
+                        </div>
+                           
+                        </div>
+                    
+                    </div>
+                    
+                </div>
+               
+             </div>
+        </div>     
+    </div>
+        
+</body>
+ 
+</html>
